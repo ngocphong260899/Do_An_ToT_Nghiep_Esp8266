@@ -1,19 +1,14 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-#include "IRremoteESP8266.h"
-#include "IRutils.h"
-#include "IRtext.h"
-#include "IRrecv.h"
-#include "IRsend.h"
 #include "PubSubClient.h"
 #include <ArduinoJson.h>
-#include "ir_LG.h"
 #include <string.h>
+
 /*
 *define info mqtt
 */
-const char *ssid = "VNPT TUAN";
-const char *password = "";
+ const char *ssid = "VNPT TUAN";
+ const char *password = "";
 const char *mqtt_client_id = "sw_controller";
 
 const char *mqtt_server_ip = "mqtt.ngoinhaiot.com";
@@ -22,16 +17,15 @@ const char *mqtt_password = "ngocphong260899";
 const char *mqtt_topic_sub = "ngocphong260899/app";
 const char *mqtt_topic_pub = "ngocphong260899/device";
 int mqtt_port = 1111;
-
 int led = LED_BUILTIN;
 int button = D3;
-
 int state, lastState = 0;
 #define json_pos "pos"
 #define json_status "status"
 #define json_sw_wifi "sw_wifi"
 WiFiClient espClient;
 PubSubClient client(espClient);
+void smart_Config();
 void control(int vitri, int status);
 void callback(char *p_toppic, uint8_t *p_data, unsigned int length)
 {
@@ -58,15 +52,25 @@ switch(sw_wifi){
     control(pos,status);
   }
   break;
+
+  case 2:
+  {
+    if(digitalRead(led) == 1)
+    {
+      String relay1_on = "{\"pos\":1,\"status\":0}";
+      client.publish("ngocphong260899/device",(char*)relay1_on.c_str());
+    }
+    else if(digitalRead(led) ==0)
+    {
+      String relay1_on = "{\"pos\":1,\"status\":1}";
+      client.publish("ngocphong260899/device",(char*)relay1_on.c_str());
+    }
+  }
+  break;
 }
 }
 
-void get_State()
-{
-    String ssids = WiFi.SSID();
-    uint8_t streng = WiFi.RSSI();
-    IPAddress ip = WiFi.localIP();
-}
+
 
 void control(int vitri, int status)
 {
@@ -126,11 +130,9 @@ void setup()
     delay(10);
     Serial.print("..........");
   }
-  Serial.print("INFO: IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.println("ssid :");
-  Serial.print(WiFi.SSID());
-  Serial.print(WiFi.RSSI());
+  Serial.print("Connect succuess");
+ 
+  Serial.println("Setup done");
   client.setServer(mqtt_server_ip, mqtt_port);
   client.setCallback(callback);
 }
@@ -138,12 +140,13 @@ void setup()
 void loop()
 {
   // put your main code here, to run repeatedly:
+  
   if (!client.connected())
   {
     reconnect();
   }
   client.loop();
- btn_control();
+  btn_control();
 }
 // button handle
 
@@ -166,3 +169,4 @@ void btn_control()
   }
   lastState = state;
 }
+
