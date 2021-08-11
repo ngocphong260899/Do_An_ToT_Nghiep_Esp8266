@@ -118,33 +118,49 @@ void button_handler()
 
 void control_IO(int cmd)
 {
+    char msg[100];
     switch (cmd)
     {
         case CH1_ON:
         {
             gpio_on(LED_BUILTIN);
+            int stt = digitalRead(LED1);
+            sprintf(msg,"{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}",1,1,stt);
+            queueMsg(msg);
+            Serial.println("Debug_print: CH1 on");
         }break;
         case CH1_OFF:
         {
             gpio_off(LED_BUILTIN);
+            int stt = digitalRead(LED1);
+            sprintf(msg,"{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}",1,1,stt);
+            queueMsg(msg);
+            Serial.println("Debug_print: CH1 off");
         }break;
 
         case CH2_ON:
         {
             gpio_on(D2);
+            Serial.println("Debug_print: CH2 on");
         }break;
         case CH2_OFF:
         {
             gpio_off(D2);
+            Serial.println("Debug_print: CH2 off");
         }break;
 
         case CH3_ON:
         {
             gpio_on(D1);
+            Serial.println("Debug_print: CH3 on");
         }break;
         case CH3_OFF:
         {
             gpio_off(D1);
+            Serial.println("Debug_print: CH3 off");
         }break;
+        default:{
+             Serial.println("Debug_print: Not controller");
+        }
     }
 }
