@@ -101,7 +101,7 @@ void scan_button(uint8_t button_index)
                 Serial.println("Button was press");
                 toggle_led(m_led[button_index]);
                 int stt = digitalRead(m_led[button_index]);
-                sprintf(msg,"{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}",1,button_index,stt);
+                sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, button_index, stt);
                 queueMsg(msg);
             }
         }
@@ -121,46 +121,65 @@ void control_IO(int cmd)
     char msg[100];
     switch (cmd)
     {
-        case CH1_ON:
-        {
-            gpio_on(LED_BUILTIN);
-            int stt = digitalRead(LED1);
-            sprintf(msg,"{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}",1,1,stt);
-            queueMsg(msg);
-            Serial.println("Debug_print: CH1 on");
-        }break;
-        case CH1_OFF:
-        {
-            gpio_off(LED_BUILTIN);
-            int stt = digitalRead(LED1);
-            sprintf(msg,"{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}",1,1,stt);
-            queueMsg(msg);
-            Serial.println("Debug_print: CH1 off");
-        }break;
+    case CH1_ON:
+    {
+        gpio_on(LED1);
+        int stt = digitalRead(LED1);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 1, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH1 on");
+    }
+    break;
+    case CH1_OFF:
+    {
+        gpio_off(LED_BUILTIN);
+        int stt = digitalRead(LED1);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 1, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH1 off");
+    }
+    break;
 
-        case CH2_ON:
-        {
-            gpio_on(D2);
-            Serial.println("Debug_print: CH2 on");
-        }break;
-        case CH2_OFF:
-        {
-            gpio_off(D2);
-            Serial.println("Debug_print: CH2 off");
-        }break;
+    case CH2_ON:
+    {
+        gpio_on(LED2);
+        int stt = digitalRead(LED2);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 2, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH2 on");
+    }
+    break;
+    case CH2_OFF:
+    {
+        gpio_off(LED2);
+        int stt = digitalRead(LED2);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 2, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH2 off");
+    }
+    break;
 
-        case CH3_ON:
-        {
-            gpio_on(D1);
-            Serial.println("Debug_print: CH3 on");
-        }break;
-        case CH3_OFF:
-        {
-            gpio_off(D1);
-            Serial.println("Debug_print: CH3 off");
-        }break;
-        default:{
-             Serial.println("Debug_print: Not controller");
-        }
+    case CH3_ON:
+    {
+        gpio_on(LED3);
+        int stt = digitalRead(LED2);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 3, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH3 on");
+    }
+    break;
+    case CH3_OFF:
+    {
+        gpio_off(LED3);
+        int stt = digitalRead(LED3);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, 3, stt);
+        queueMsg(msg);
+        Serial.println("Debug_print: CH3 off");
+    }
+    break;
+    default:
+    {
+        Serial.println("Debug_print: Not controller");
+    }
     }
 }

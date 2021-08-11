@@ -85,3 +85,9 @@ void queueMsg(char* msg)
 {
     client.publish(mqtt_topic_pub,msg);
 }
+
+
+void get_i4_wifi_io()
+{
+    
+}
