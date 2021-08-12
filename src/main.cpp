@@ -11,7 +11,7 @@ void setup()
 {
     Serial.begin(115200);
    // WiFi.begin(ssid,password);
-   smart_config_init();
+    smart_config_init();
     led_btn_init();
     led_staus_start();
     mqtt_init();

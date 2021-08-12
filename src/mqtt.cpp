@@ -1,5 +1,6 @@
 #include "mqtt.h"
 #include "led_button.h"
+#include "smartConfig.h"
 WiFiClient espClient;
 PubSubClient client(espClient);
 typedef enum
@@ -68,7 +69,8 @@ void callback(char *p_toppic, uint8_t *p_data, unsigned int length)
 
     case GET_STT_IO:
     {
-
+        get_State_IO();
+        get_Wifi();
     }
     break;
     }
@@ -87,7 +89,3 @@ void queueMsg(char* msg)
 }
 
 
-void get_i4_wifi_io()
-{
-    
-}

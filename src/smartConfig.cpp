@@ -3,7 +3,7 @@
 #include <Ticker.h>
 #include <time.h>
 #include "led_button.h"
-
+#include "mqtt.h"
 #define LED1 LED_BUILTIN
 #define BUTTON1 D3
 
@@ -40,7 +40,7 @@ void enter_smartconfig()
     if (in_smartconfig == false)
     {
         in_smartconfig = true;
-        ticker.attach(0.1, tick);
+        ticker.attach(0.5, tick);
         WiFi.beginSmartConfig();
     }
 }
@@ -68,5 +68,16 @@ void smart_config_loop()
     {
         exit_smart();
         Serial.println("Connected, Exit smartconfig");
-    }
+    } 
+}
+
+void get_Wifi()
+{
+    char msg[100];
+    String ssid = WiFi.SSID();
+    char streng = WiFi.RSSI();
+    sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d,\"ssid\":\"%s\",\"streng\":\"%c\"}", 2, 0, 0,ssid,streng);
+    
+    queueMsg(msg);
+
 }

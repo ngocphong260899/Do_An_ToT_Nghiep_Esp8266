@@ -183,3 +183,16 @@ void control_IO(int cmd)
     }
     }
 }
+
+
+void get_State_IO()
+{
+    char msg[100];
+    for(int i =0; i < 3; i++)
+    {
+        int stt = digitalRead(m_led[i]);
+        sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, i+1, stt);
+        
+    }
+    queueMsg(msg);
+}
