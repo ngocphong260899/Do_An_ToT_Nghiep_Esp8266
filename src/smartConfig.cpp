@@ -40,7 +40,7 @@ void enter_smartconfig()
     if (in_smartconfig == false)
     {
         in_smartconfig = true;
-        ticker.attach(0.5, tick);
+        ticker.attach(0.1, tick);
         WiFi.beginSmartConfig();
     }
 }
@@ -54,7 +54,7 @@ void exit_smart()
 
 void smart_config_init()
 {
-    ticker.attach(1, tick);
+    ticker.attach(0.6, tick);
 }
 
 void smart_config_loop()
@@ -75,8 +75,8 @@ void get_Wifi()
 {
     char msg[100];
     String ssid = WiFi.SSID();
-    char streng = WiFi.RSSI();
-    sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d,\"ssid\":\"%s\",\"streng\":\"%c\"}", 2, 0, 0,ssid,streng);
+    int streng = WiFi.RSSI();
+    sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d,\"ssid\":\"%s\",\"streng\":%d}", 2, 0, 0,ssid,streng);
     
     queueMsg(msg);
 
