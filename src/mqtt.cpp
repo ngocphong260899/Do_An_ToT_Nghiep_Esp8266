@@ -69,8 +69,9 @@ void callback(char *p_toppic, uint8_t *p_data, unsigned int length)
 
     case GET_STT_IO:
     {
+        
         get_State_IO();
-        get_Wifi();
+       get_Wifi();
     }
     break;
     }

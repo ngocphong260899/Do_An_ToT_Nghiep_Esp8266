@@ -101,7 +101,7 @@ void scan_button(uint8_t button_index)
                 Serial.println("Button was press");
                 toggle_led(m_led[button_index]);
                 int stt = digitalRead(m_led[button_index]);
-                sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, button_index, stt);
+                sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, button_index+1, stt);
                 queueMsg(msg);
             }
         }
@@ -192,7 +192,7 @@ void get_State_IO()
     {
         int stt = digitalRead(m_led[i]);
         sprintf(msg, "{\"sw_wifi\":%d,\"pos\":%d,\"status\":%d}", 1, i+1, stt);
-        
+         queueMsg(msg);
     }
-    queueMsg(msg);
+   
 }
